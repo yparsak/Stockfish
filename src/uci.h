@@ -25,6 +25,7 @@
 #include <string>
 
 #include "types.h"
+#include "bitboard.h"
 
 class Position;
 

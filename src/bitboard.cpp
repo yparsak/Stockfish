@@ -60,6 +60,26 @@ namespace {
   }
 }
 
+const std::string Bitboards::dump() {
+    std::string s = "";
+    s += "All Squares  "+printBB(AllSquares);
+    s += "Dark Squares "+printBB(DarkSquares);
+    return s;
+}
+
+
+const std::string Bitboards::printBB(Bitboard b) {
+    std::string s = "";
+    for (Rank r = RANK_8; r >= RANK_1; --r)
+    {
+        for (File f = FILE_H; f >= FILE_A; --f) {
+            s += b & make_square(f,r) ? "1" : "0";
+        }
+        s+=" ";
+    }
+    s += "\n";
+    return s;
+}
 
 /// Bitboards::pretty() returns an ASCII representation of a bitboard suitable
 /// to be printed to standard output. Useful for debugging.

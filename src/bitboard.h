@@ -28,15 +28,14 @@
 namespace Bitbases {
 
 void init();
-bool probe(Square wksq, Square wpsq, Square bksq, Color us);
-
+  bool probe(Square wksq, Square wpsq, Square bksq, Color us);
 }
 
 namespace Bitboards {
-
-void init();
-const std::string pretty(Bitboard b);
-
+  void init();
+  const std::string pretty(Bitboard b);
+  const std::string printBB(Bitboard b);
+  const std::string dump();
 }
 
 constexpr Bitboard AllSquares = ~Bitboard(0);

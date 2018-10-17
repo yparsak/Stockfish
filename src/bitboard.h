@@ -64,6 +64,12 @@ constexpr Bitboard Rank7BB = Rank1BB << (8 * 6);        // 00000000 11111111 000
 constexpr Bitboard Rank8BB = Rank1BB << (8 * 7);        // 11111111 00000000 00000000 00000000 00000000 00000000 00000000 00000000
 
 extern int SquareDistance[SQUARE_NB][SQUARE_NB];        // SquareDistance[64][64]
+                                                        // SquareDistance[SQ_A1][SQ_A2] = SquareDistance[0][8]  = 1
+                                                        // SquareDistance[SQ_A1][SQ_B2] = SquareDistance[0][9]  = 1
+                                                        // SquareDistance[SQ_A1][SQ_C2] = SquareDistance[0][10] = 2
+                                                        // SquareDistance[SQ_A1][SQ_D3] = SquareDistance[0][19] = 3
+                                                        // SquareDistance[SQ_A1][SQ_H1] = SquareDistance[0][7]  = 7
+                                                        // SquareDistance[SQ_A1][SQ_H1] = SquareDistance[0][7]  = 7
 
 extern Bitboard SquareBB[SQUARE_NB];                    // SquareBB[64]
                                                         //SquareBB[SQ_A1] = SquareBB[0] =
@@ -112,8 +118,35 @@ extern Bitboard ForwardRanksBB[COLOR_NB][RANK_NB];      // ForwardRanksBB[2][8]
                                                         // ForwardRanksBB[BLACK][RANK_7] = ForwardRanks[1][6]
                                                         // 00000000 00000000 11111111 11111111 11111111 11111111 11111111 11111111
 
+// Bitboard of squares between two squares.
 extern Bitboard BetweenBB[SQUARE_NB][SQUARE_NB];        // BetweenBB[64][64]
+                                                        // BetweenBB[SQ_A1][SQ_H1] = BetweenBB[0][7]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 01111110
+
+                                                        // BetweenBB[SQ_A1][SQ_H8] = BetweenBB[0][63]
+                                                        // 00000000 01000000 00100000 00010000 00001000 00000100 00000010 00000000
+
+                                                        // BetweenBB[SQ_A1][SQ_A2] = BetweenBB[0][8]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+                                                        // No squares between a1 and a2
+
+// If both squares are on the same line (rank, file, diagonal) then there is a bitboard that contains all squares in those lines.
+// If they are not on the same line, the bitboard is zero.
 extern Bitboard LineBB[SQUARE_NB][SQUARE_NB];           // LineBB[64][64]
+
+                                                        // LineBB[SQ_A1][SQ_H1] = LineBB[0][7]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 11111111
+
+                                                        // LineBB[SQ_A1][SQ_H8] = LineBB[0][63]
+                                                        // 10000000 01000000 00100000 00010000 00001000 00000100 00000010 00000001
+
+                                                        // LineBB[SQ_A1][SQ_A2] = LineBB[0][8]
+                                                        // 00000001 00000001 00000001 00000001 00000001 00000001 00000001 00000001
+
+                                                        // LineBB[SQ_A1][SQ_C2] = LineBB[0][10]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+                                                        // a1 and c2 are not on same file, or rank
+
 extern Bitboard DistanceRingBB[SQUARE_NB][8];           // DistanceRingBB[64][8]
 extern Bitboard ForwardFileBB[COLOR_NB][SQUARE_NB];     // ForwardFileBB[2][64]
 extern Bitboard PassedPawnMask[COLOR_NB][SQUARE_NB];    // PassedPawnMask[2][64]

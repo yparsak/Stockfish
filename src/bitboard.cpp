@@ -81,6 +81,14 @@ const std::string Bitboards::dump() {
 //    s += "Rank6BB      "+printBB(Rank6BB);
 //    s += "Rank7BB      "+printBB(Rank7BB);
 //    s += "Rank8BB      "+printBB(Rank8BB);
+
+//    s += "SquareDistance[SQ_A1][SQ_A2] " + std::to_string(SquareDistance[SQ_A1][SQ_A2]) + "\n";
+//    s += "SquareDistance[SQ_A1][SQ_B2] " + std::to_string(SquareDistance[SQ_A1][SQ_B2]) + "\n";
+//    s += "SquareDistance[SQ_A1][SQ_C2] " + std::to_string(SquareDistance[SQ_A1][SQ_C2]) + "\n";
+//    s += "SquareDistance[SQ_A1][SQ_D3] " + std::to_string(SquareDistance[SQ_A1][SQ_D3]) + "\n";
+//    s += "SquareDistance[SQ_A1][SQ_H1] " + std::to_string(SquareDistance[SQ_A1][SQ_H1]) + "\n";
+//    s += "SquareDistance[SQ_A1][SQ_H8] " + std::to_string(SquareDistance[SQ_A1][SQ_H8]) + "\n";
+
 //    s += "SquareBB[SQ_A1] "+printBB(SquareBB[SQ_A1]);
 //    s += "SquareBB[SQ_B1] "+printBB(SquareBB[SQ_B1]);
 //    s += "FileBB[FILE_A] "+printBB(FileBB[FILE_A]);
@@ -93,6 +101,15 @@ const std::string Bitboards::dump() {
 //    s += "ForwardRanksBB[WHITE][RANK_2]" +printBB(ForwardRanksBB[WHITE][RANK_2]);
 //    s += "ForwardRanksBB[BLACK][RANK_8]" +printBB(ForwardRanksBB[BLACK][RANK_8]);
 //    s += "ForwardRanksBB[BLACK][RANK_7]" +printBB(ForwardRanksBB[BLACK][RANK_7]);
+    
+//    s += "BetweenBB[SQ_A1][SQ_H1] " + printBB(BetweenBB[SQ_A1][SQ_H1]) ;
+//    s += "BetweenBB[SQ_A1][SQ_H8] " + printBB(BetweenBB[SQ_A1][SQ_H8]) ;
+//    s += "BetweenBB[SQ_A1][SQ_A2] " + printBB(BetweenBB[SQ_A1][SQ_A2]) ;
+
+//    s += "LineBB[SQ_A1][SQ_H1] " + printBB(LineBB[SQ_A1][SQ_H1]) ;
+//    s += "LineBB[SQ_A1][SQ_H8] " + printBB(LineBB[SQ_A1][SQ_H8]) ;
+//    s += "LineBB[SQ_A1][SQ_A2] " + printBB(LineBB[SQ_A1][SQ_A2]) ;
+//    s += "LineBB[SQ_A1][SQ_C2] " + printBB(LineBB[SQ_A1][SQ_C2]) ;
     
     return s;
 }

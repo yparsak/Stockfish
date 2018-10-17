@@ -38,42 +38,88 @@ namespace Bitboards {
   const std::string dump();
 }
 
-constexpr Bitboard AllSquares = ~Bitboard(0);
-constexpr Bitboard DarkSquares = 0xAA55AA55AA55AA55ULL;
+// most significant bit is H8, and least significant bit is a1
+//                                                    //  H8                                                                     A1
+constexpr Bitboard AllSquares = ~Bitboard(0);           // 11111111 11111111 11111111 11111111 11111111 11111111 11111111 11111111
+constexpr Bitboard DarkSquares = 0xAA55AA55AA55AA55ULL; // 10101010 01010101 10101010 01010101 10101010 01010101 10101010 01010101
 
-constexpr Bitboard FileABB = 0x0101010101010101ULL;
-constexpr Bitboard FileBBB = FileABB << 1;
-constexpr Bitboard FileCBB = FileABB << 2;
-constexpr Bitboard FileDBB = FileABB << 3;
-constexpr Bitboard FileEBB = FileABB << 4;
-constexpr Bitboard FileFBB = FileABB << 5;
-constexpr Bitboard FileGBB = FileABB << 6;
-constexpr Bitboard FileHBB = FileABB << 7;
+// Using left shift to determine files from FILE_A
+constexpr Bitboard FileABB = 0x0101010101010101ULL;     // 00000001 00000001 00000001 00000001 00000001 00000001 00000001 00000001
+constexpr Bitboard FileBBB = FileABB << 1;              // 00000010 00000010 00000010 00000010 00000010 00000010 00000010 00000010
+constexpr Bitboard FileCBB = FileABB << 2;              // 00000100 00000100 00000100 00000100 00000100 00000100 00000100 00000100
+constexpr Bitboard FileDBB = FileABB << 3;              // 00001000 00001000 00001000 00001000 00001000 00001000 00001000 00001000
+constexpr Bitboard FileEBB = FileABB << 4;              // 00010000 00010000 00010000 00010000 00010000 00010000 00010000 00010000
+constexpr Bitboard FileFBB = FileABB << 5;              // 00100000 00100000 00100000 00100000 00100000 00100000 00100000 00100000
+constexpr Bitboard FileGBB = FileABB << 6;              // 01000000 01000000 01000000 01000000 01000000 01000000 01000000 01000000
+constexpr Bitboard FileHBB = FileABB << 7;              // 10000000 10000000 10000000 10000000 10000000 10000000 10000000 10000000
 
-constexpr Bitboard Rank1BB = 0xFF;
-constexpr Bitboard Rank2BB = Rank1BB << (8 * 1);
-constexpr Bitboard Rank3BB = Rank1BB << (8 * 2);
-constexpr Bitboard Rank4BB = Rank1BB << (8 * 3);
-constexpr Bitboard Rank5BB = Rank1BB << (8 * 4);
-constexpr Bitboard Rank6BB = Rank1BB << (8 * 5);
-constexpr Bitboard Rank7BB = Rank1BB << (8 * 6);
-constexpr Bitboard Rank8BB = Rank1BB << (8 * 7);
+// Shifting 8 bits to the left changes the rank.
+constexpr Bitboard Rank1BB = 0xFF;                      // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 11111111
+constexpr Bitboard Rank2BB = Rank1BB << (8 * 1);        // 00000000 00000000 00000000 00000000 00000000 00000000 11111111 00000000
+constexpr Bitboard Rank3BB = Rank1BB << (8 * 2);        // 00000000 00000000 00000000 00000000 00000000 11111111 00000000 00000000
+constexpr Bitboard Rank4BB = Rank1BB << (8 * 3);        // 00000000 00000000 00000000 00000000 11111111 00000000 00000000 00000000
+constexpr Bitboard Rank5BB = Rank1BB << (8 * 4);        // 00000000 00000000 00000000 11111111 00000000 00000000 00000000 00000000
+constexpr Bitboard Rank6BB = Rank1BB << (8 * 5);        // 00000000 00000000 11111111 00000000 00000000 00000000 00000000 00000000
+constexpr Bitboard Rank7BB = Rank1BB << (8 * 6);        // 00000000 11111111 00000000 00000000 00000000 00000000 00000000 00000000
+constexpr Bitboard Rank8BB = Rank1BB << (8 * 7);        // 11111111 00000000 00000000 00000000 00000000 00000000 00000000 00000000
 
-extern int SquareDistance[SQUARE_NB][SQUARE_NB];
+extern int SquareDistance[SQUARE_NB][SQUARE_NB];        // SquareDistance[64][64]
 
-extern Bitboard SquareBB[SQUARE_NB];
-extern Bitboard FileBB[FILE_NB];
-extern Bitboard RankBB[RANK_NB];
-extern Bitboard AdjacentFilesBB[FILE_NB];
-extern Bitboard ForwardRanksBB[COLOR_NB][RANK_NB];
-extern Bitboard BetweenBB[SQUARE_NB][SQUARE_NB];
-extern Bitboard LineBB[SQUARE_NB][SQUARE_NB];
-extern Bitboard DistanceRingBB[SQUARE_NB][8];
-extern Bitboard ForwardFileBB[COLOR_NB][SQUARE_NB];
-extern Bitboard PassedPawnMask[COLOR_NB][SQUARE_NB];
-extern Bitboard PawnAttackSpan[COLOR_NB][SQUARE_NB];
-extern Bitboard PseudoAttacks[PIECE_TYPE_NB][SQUARE_NB];
-extern Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];
+extern Bitboard SquareBB[SQUARE_NB];                    // SquareBB[64]
+                                                        //SquareBB[SQ_A1] = SquareBB[0] =
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000001
+                                                        // 1UL left shifted SQ_A1 (zero) times (no shifting)
+
+                                                        // SquareBB[SQ_B1] = SquareBB[1]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000010
+                                                        // 1UL left shifted SQ_B1 (one) times
+// FileBB[FILE_A] = FileABB
+extern Bitboard FileBB[FILE_NB];                        // FileBB[8]
+                                                        // FileBB[FILE_A] = FileBB[0]
+                                                        // 00000001 00000001 00000001 00000001 00000001 00000001 00000001 00000001
+
+                                                        // FileBB[FILE_B] = FileBB[1]
+                                                        //00000010 00000010 00000010 00000010 00000010 00000010 00000010 00000010
+
+// RankBB[RANK_1] = Rank1BB
+extern Bitboard RankBB[RANK_NB];                        // RankBB[8]
+                                                        // RankBB[RANK_1] = RankBB[0]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 11111111
+
+                                                        // RankBB[RANK_2] = RankBB[1]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 11111111 00000000
+
+extern Bitboard AdjacentFilesBB[FILE_NB];               // AdjacentFilesBB[8];
+                                                        // AdjacentFilesBB[FILE_A] = AdjacentFilesBB[0]
+                                                        // 00000010 00000010 00000010 00000010 00000010 00000010 00000010 00000010
+                                                        // (Adjacent file of file A is only File B)
+
+                                                        // AdjacentFilesBB[FILE_B] = AdjacentFilesBB[1]
+                                                        // 00000101 00000101 00000101 00000101 00000101 00000101 00000101 00000101
+                                                        // (Adjacent files of file B are Files A and C)
+
+extern Bitboard ForwardRanksBB[COLOR_NB][RANK_NB];      // ForwardRanksBB[2][8]
+                                                        // ForwardRanks[WHITE][RANK_1] = ForwardRanks[0][0]
+                                                        // 11111111 11111111 11111111 11111111 11111111 11111111 11111111 00000000
+
+                                                        // ForwardRanks[WHITE][RANK_2] = ForwardRanks[0][1]
+                                                        // 11111111 11111111 11111111 11111111 11111111 11111111 00000000 00000000
+
+// Rank is always from WHITE's perspective
+                                                        // ForwardRanks[BLACK][RANK_8] = ForwardRanks[1][7]
+                                                        // 00000000 11111111 11111111 11111111 11111111 11111111 11111111 11111111
+
+                                                        // ForwardRanksBB[BLACK][RANK_7] = ForwardRanks[1][6]
+                                                        // 00000000 00000000 11111111 11111111 11111111 11111111 11111111 11111111
+
+extern Bitboard BetweenBB[SQUARE_NB][SQUARE_NB];        // BetweenBB[64][64]
+extern Bitboard LineBB[SQUARE_NB][SQUARE_NB];           // LineBB[64][64]
+extern Bitboard DistanceRingBB[SQUARE_NB][8];           // DistanceRingBB[64][8]
+extern Bitboard ForwardFileBB[COLOR_NB][SQUARE_NB];     // ForwardFileBB[2][64]
+extern Bitboard PassedPawnMask[COLOR_NB][SQUARE_NB];    // PassedPawnMask[2][64]
+extern Bitboard PawnAttackSpan[COLOR_NB][SQUARE_NB];    // PawnAttackSpan[2][64]
+extern Bitboard PseudoAttacks[PIECE_TYPE_NB][SQUARE_NB];// PseudoAttacks[8][64]
+extern Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];       // PawnAttacks[2[64]
 
 
 /// Magic holds all magic bitboards relevant data for a single square

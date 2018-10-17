@@ -62,8 +62,38 @@ namespace {
 
 const std::string Bitboards::dump() {
     std::string s = "";
-    s += "All Squares  "+printBB(AllSquares);
-    s += "Dark Squares "+printBB(DarkSquares);
+
+//    s += "All Squares  "+printBB(AllSquares);
+//    s += "Dark Squares "+printBB(DarkSquares);
+//    s += "FileABB      "+printBB(FileABB);
+//    s += "FileBBB      "+printBB(FileBBB);
+//    s += "FileCBB      "+printBB(FileCBB);
+//    s += "FileDBB      "+printBB(FileDBB);
+//    s += "FileEBB      "+printBB(FileEBB);
+//    s += "FileFBB      "+printBB(FileFBB);
+//    s += "FileGBB      "+printBB(FileGBB);
+//    s += "FileHBB      "+printBB(FileHBB);
+//    s += "Rank1BB      "+printBB(Rank1BB);
+//    s += "Rank2BB      "+printBB(Rank2BB);
+//    s += "Rank3BB      "+printBB(Rank3BB);
+//    s += "Rank4BB      "+printBB(Rank4BB);
+//    s += "Rank5BB      "+printBB(Rank5BB);
+//    s += "Rank6BB      "+printBB(Rank6BB);
+//    s += "Rank7BB      "+printBB(Rank7BB);
+//    s += "Rank8BB      "+printBB(Rank8BB);
+//    s += "SquareBB[SQ_A1] "+printBB(SquareBB[SQ_A1]);
+//    s += "SquareBB[SQ_B1] "+printBB(SquareBB[SQ_B1]);
+//    s += "FileBB[FILE_A] "+printBB(FileBB[FILE_A]);
+//    s += "FileBB[FILE_B] "+printBB(FileBB[FILE_B]);
+//    s += "RankBB[RANK_1]  "+printBB(RankBB[RANK_1]);
+//    s += "RankBB[RANK_2]  "+printBB(RankBB[RANK_2]);
+//    s += "AdjacentFilesBB[FILE_A] " +printBB(AdjacentFilesBB[FILE_A]);
+//    s += "AdjacentFilesBB[FILE_B] " +printBB(AdjacentFilesBB[FILE_B]);
+//    s += "ForwardRanksBB[WHITE][RANK_1]" +printBB(ForwardRanksBB[WHITE][RANK_1]);
+//    s += "ForwardRanksBB[WHITE][RANK_2]" +printBB(ForwardRanksBB[WHITE][RANK_2]);
+//    s += "ForwardRanksBB[BLACK][RANK_8]" +printBB(ForwardRanksBB[BLACK][RANK_8]);
+//    s += "ForwardRanksBB[BLACK][RANK_7]" +printBB(ForwardRanksBB[BLACK][RANK_7]);
+    
     return s;
 }
 

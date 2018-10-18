@@ -147,13 +147,94 @@ extern Bitboard LineBB[SQUARE_NB][SQUARE_NB];           // LineBB[64][64]
                                                         // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
                                                         // a1 and c2 are not on same file, or rank
 
+// Starting from the square, bitboard of distance squares
+// [ ][0] is always 0x0
+// [X][1] is the bitboard of squares that are around the square X
+//
 extern Bitboard DistanceRingBB[SQUARE_NB][8];           // DistanceRingBB[64][8]
+                                                        // DistanceRingBB[SQ_A1][0] - all zeros
+
+                                                        // DistanceRingBB[SQ_A1][1] - a2,b2,b1
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000011 00000010
+
+                                                        // DistanceRingBB[SQ_A1][2] - a3,b3,c3,c2,c1
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000111 00000100 00000100
+
+                                                        // DistanceRingBB[SQ_E4][0] - all zeros
+
+                                                        // DistanceRingBB[SQ_E4][1] - d5,e5,f5,d4,f4,d4,e3,f3
+                                                        // 00000000 00000000 00000000 00111000 00101000 00111000 00000000 00000000
+
+// Forward squares on same file, starting from SQUARE, using the direction of COLOR
 extern Bitboard ForwardFileBB[COLOR_NB][SQUARE_NB];     // ForwardFileBB[2][64]
+
+                                                        // ForwardFileBB[WHITE][SQ_A1] - a2,a3,a4,a5,a6,a6,a8
+                                                        // 00000001 00000001 00000001 00000001 00000001 00000001 00000001 00000000
+
+                                                        // ForwardFileBB[WHITE][SQ_A2] - a3,a4,a5,a6,a7,a8
+                                                        // 00000001 00000001 00000001 00000001 00000001 00000001 00000000 00000000
+
+                                                        // ForwardFileBB[BLACK][SQ_H8] - h7, h6, h5, h4, h3, h2, h1
+                                                        // 00000000 10000000 10000000 10000000 10000000 10000000 10000000 10000000
+
+
+// Forward squares that are on the same file, and adjacent files, starting from SQUARE, and using the direction of COLOR
 extern Bitboard PassedPawnMask[COLOR_NB][SQUARE_NB];    // PassedPawnMask[2][64]
+
+                                                        // PassedPawnMask[WHITE][SQ_B1] - a2,a3,a4,a5,a6,a7,a8
+                                                        //                                b2,b3,b4,b5,b6,b7,b8
+                                                        //                                c2,c3,c4,c5,c6,c7,c8
+                                                        // 00000111 00000111 00000111 00000111 00000111 00000111 00000111 00000000
+
+                                                        // PassedPawnMask[WHITE][SQ_B2] - a3,a4,a5,a6,a7,a8
+                                                        //                                b3,b4,b5,b6,b7,b8
+                                                        //                                c3,c4,c5,c6,c7,c8
+                                                        // 00000111 00000111 00000111 00000111 00000111 00000111 00000000 00000000
+
+                                                        // PassedPawnMask[BLACK][SQ_B2] - a1, b1, c1
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000111
+
+// Forward squares only on adjacent files, starting from the SQUARE, using the direction of COLOR
 extern Bitboard PawnAttackSpan[COLOR_NB][SQUARE_NB];    // PawnAttackSpan[2][64]
+
+                                                        // PawnAttackSpan[WHITE][SQ_B1]   a2,a3,a4,a5,a6,a7,a8
+                                                        //                                c2,c3,c4,c5,c6,c7,c8
+                                                        // 00000101 00000101 00000101 00000101 00000101 00000101 00000101 00000000
+
+                                                        // PawnAttackSpan[WHITE][SQ_B2]   a3,a4,a5,a6,a7,a8
+                                                        //                                c3,c4,c5,c6,c7,c8
+                                                        // 00000101 00000101 00000101 00000101 00000101 00000101 00000000 00000000
+
+                                                        // PassedPawnMask[BLACK][SQ_B2] - a1, c1
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000101
+
+// Bitboard of squares that the piece can attack from the SQUARE
+// Only for pieces: KING, QUEEN, ROOK, BISHOP, and KNIGHT
 extern Bitboard PseudoAttacks[PIECE_TYPE_NB][SQUARE_NB];// PseudoAttacks[8][64]
+
+                                                        // PseudoAttacks[BISHOP][SQ_A1]
+                                                        // 10000000 01000000 00100000 00010000 00001000 00000100 00000010 00000000
+
+                                                        // PseudoAttacks[ROOK][SQ_A1]
+                                                        // 00000001 00000001 00000001 00000001 00000001 00000001 00000001 11111110
+
+                                                        // PseudoAttacks[QUEEN][SQ_A1]
+                                                        // 10000001 01000001 00100001 00010001 00001001 00000101 00000011 11111110
+
+                                                        // PseudoAttacks[KING][SQ_A1]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000011 00000010
+
+                                                        // PseudoAttacks[KNIGHT][SQ_A1]
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000010 00000100 00000000
+
+// Bitboard of squares that a pawn on SQUARE can attack, using the direction of the COLOR
 extern Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];       // PawnAttacks[2[64]
 
+                                                        // PawnAttacks[WHITE][SQ_B1] - a2, c2
+                                                        // 00000000 00000000 00000000 00000000 00000000 00000000 00000101 00000000
+
+                                                        // PawnAttacks[BLACK][SQ_B7] - a6, c6
+                                                        // 00000000 00000000 00000101 00000000 00000000 00000000 00000000 00000000
 
 /// Magic holds all magic bitboards relevant data for a single square
 struct Magic {

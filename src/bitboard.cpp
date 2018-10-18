@@ -111,6 +111,32 @@ const std::string Bitboards::dump() {
 //    s += "LineBB[SQ_A1][SQ_A2] " + printBB(LineBB[SQ_A1][SQ_A2]) ;
 //    s += "LineBB[SQ_A1][SQ_C2] " + printBB(LineBB[SQ_A1][SQ_C2]) ;
     
+//    s += "DistanceRingBB[SQ_A1][0] " + printBB(DistanceRingBB[SQ_A1][0]);
+//    s += "DistanceRingBB[SQ_A1][1] " + printBB(DistanceRingBB[SQ_A1][1]);
+//    s += "DistanceRingBB[SQ_A1][2] " + printBB(DistanceRingBB[SQ_A1][2]);
+    
+//    s += "ForwardFileBB[WHITE][SQ_A1]" +printBB(ForwardFileBB[WHITE][SQ_A1]);
+//    s += "ForwardFileBB[WHITE][SQ_A2]" +printBB(ForwardFileBB[WHITE][SQ_A2]);
+//    s += "ForwardFileBB[BLACK][SQ_H8]" +printBB(ForwardFileBB[BLACK][SQ_H8]);
+
+//    s += "PassedPawnMask[WHITE][SQ_B1]" +printBB(PassedPawnMask[WHITE][SQ_B1]);
+//    s += "PassedPawnMask[WHITE][SQ_B2]" +printBB(PassedPawnMask[WHITE][SQ_B2]);
+//    s += "PassedPawnMask[BLACK][SQ_B2]" +printBB(PassedPawnMask[BLACK][SQ_B2]);
+
+//    s += "PawnAttackSpan[WHITE][SQ_B1]" +printBB(PawnAttackSpan[WHITE][SQ_B1]);
+//    s += "PawnAttackSpan[WHITE][SQ_B2]" +printBB(PawnAttackSpan[WHITE][SQ_B2]);
+//    s += "PawnAttackSpan[BLACK][SQ_B2]" +printBB(PawnAttackSpan[BLACK][SQ_B2]);
+
+//    s += "PseudoAttacks[BISHOP][SQ_A1]" +printBB(PseudoAttacks[BISHOP][SQ_A1]);
+//    s += "PseudoAttacks[ROOK][SQ_A1]"   +printBB(PseudoAttacks[ROOK][SQ_A1]);
+//    s += "PseudoAttacks[QUEEN][SQ_A1]"  +printBB(PseudoAttacks[QUEEN][SQ_A1]);
+//    s += "PseudoAttacks[KING][SQ_A1]"   +printBB(PseudoAttacks[KING][SQ_A1]);
+//    s += "PseudoAttacks[KNIGHT][SQ_A1]" +printBB(PseudoAttacks[KNIGHT][SQ_A1]);
+
+//    s += "PawnAttacks[WHITE][SQ_B1]" +printBB(PawnAttacks[WHITE][SQ_B1]);
+//    s += "PawnAttacks[WHITE][SQ_B2]" +printBB(PawnAttacks[WHITE][SQ_B2]);
+//    s += "PawnAttacks[BLACK][SQ_B7]" +printBB(PawnAttacks[BLACK][SQ_B7]);
+    
     return s;
 }
 

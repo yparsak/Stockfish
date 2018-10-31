@@ -236,6 +236,32 @@ extern Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];       // PawnAttacks[2[64]
                                                         // PawnAttacks[BLACK][SQ_B7] - a6, c6
                                                         // 00000000 00000000 00000101 00000000 00000000 00000000 00000000 00000000
 
+//---------------------------------------------------------------------------------------------------------------------------------
+// Magic
+//  .mask   (Bitboard)      : Squares that a sliding piece can move/attack.
+//                          (The mask does not include edges, b/c if a Rook can move to h7, can always move/attack to h8 on h file.
+//                          This idea reduces the size of the table)
+//  .shif   (unsigned int)  : (For 64 bit) 64 - (The number of non-zero bits in the mask)
+
+//  .magic  (Bitboard)
+//  attacks[index]
+//  (occupied & mask) * magic >> shift = index
+//                          : Occupancy is all possible piece combinations on the mask. Since we don't use the edges,
+//                            There are 6+6 squares which makes 2^(6+6)=4096 possible combinations.
+//
+
+    // RookMagics[SQ_A1].mask  = a2-a7, b1-g1
+    //                          00000000 00000001 00000001 00000001 00000001 00000001 00000001 01111110
+    // RookMagics[SQ_C1].mask  = b1, d1-g1, c2-c7
+    //                          00000000 00000100 00000100 00000100 00000100 00000100 00000100 01111010
+
+    // For 64 bits: (64 - number of non-zero bits in the mask)
+    // RookMagics[SQ_A1].shift = 64 - PopCount(RookMagics[SQ_A1].mask) = 52
+    // RookMagics[SQ_C1].shift = 64 - PopCount(RookMagics[SQ_C1].mask) = 53
+
+
+
+
 /// Magic holds all magic bitboards relevant data for a single square
 struct Magic {
   Bitboard  mask;

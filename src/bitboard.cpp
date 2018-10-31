@@ -137,6 +137,32 @@ const std::string Bitboards::dump() {
 //    s += "PawnAttacks[WHITE][SQ_B2]" +printBB(PawnAttacks[WHITE][SQ_B2]);
 //    s += "PawnAttacks[BLACK][SQ_B7]" +printBB(PawnAttacks[BLACK][SQ_B7]);
     
+//    Square sq = SQ_A1;
+//    Bitboard edges = ((Rank1BB | Rank8BB) & ~rank_bb(sq)) | ((FileABB | FileHBB) & ~file_bb(sq));
+//    s += pretty(edges);
+//    Magic& m = RookMagics[sq];
+//    s += pretty(m.mask);                // A1 b1-g1, a2-a7
+//    s += std::to_string(m.shift)+"\n";  // 52
+//    Bitboard occupancy[4096], b;
+//    int size = 0;
+//    b = size =0;
+//    do {
+//        occupancy[size] = b;
+//        s += std::to_string(size) + " " + printBB(b);
+//        size++;
+//        b = (b - m.mask) & m.mask;
+//    } while (b);
+
+    
+//    //s += "Rook Magics A1 " + pretty(RookMagics[SQ_A1].mask);
+//    s += "Rook Magics C1 mask " + pretty(RookMagics[SQ_C1].mask);
+    
+//    for (Square sqr = SQ_A1; sqr <= SQ_H8; ++sqr) {
+//        s +=    std::to_string(sqr)+"\t 64 - " +
+//                std::to_string(popcount(RookMagics[sqr].mask)) + " = " +
+//                std::to_string(RookMagics[sqr].shift) +"\n";
+//    }
+    
     return s;
 }
 
@@ -286,6 +312,7 @@ namespace {
     int seeds[][RANK_NB] = { { 8977, 44560, 54343, 38998,  5731, 95205, 104912, 17020 },
                              {  728, 10316, 55013, 32803, 12281, 15100,  16645,   255 } };
 
+    // Since we don't use edges, it will be 2^(6+6) = 4096
     Bitboard occupancy[4096], reference[4096], edges, b;
     int epoch[4096] = {}, cnt = 0, size = 0;
 
@@ -293,7 +320,7 @@ namespace {
     {
         // Board edges are not considered in the relevant occupancies
         edges = ((Rank1BB | Rank8BB) & ~rank_bb(s)) | ((FileABB | FileHBB) & ~file_bb(s));
-
+        
         // Given a square 's', the mask is the bitboard of sliding attacks from
         // 's' computed on an empty board. The index must be big enough to contain
         // all the attacks for each possible subset of the mask and so is 2 power
@@ -309,21 +336,25 @@ namespace {
 
         // Use Carry-Rippler trick to enumerate all subsets of masks[s] and
         // store the corresponding sliding attack bitboard in reference[].
+        
+        // Loop from 0 to 4095. There are 2^(6+6)=4096 possible occupancy combinations.
         b = size = 0;
         do {
             occupancy[size] = b;
             reference[size] = sliding_attack(directions, s, b);
-
+            
             if (HasPext)
                 m.attacks[pext(b, m.mask)] = reference[size];
 
             size++;
-            b = (b - m.mask) & m.mask;
+            b = (b - m.mask) & m.mask;  //increment b, using mask
         } while (b);
 
+        // (if HasPext) then this is set above, so continue
+        // m.attacks[pext(b, m.mask)] = reference[size];
         if (HasPext)
             continue;
-
+        
         PRNG rng(seeds[Is64Bit][rank_of(s)]);
 
         // Find a magic for square 's' picking up an (almost) random number

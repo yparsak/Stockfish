@@ -238,10 +238,13 @@ extern Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];       // PawnAttacks[2[64]
 
 //---------------------------------------------------------------------------------------------------------------------------------
 // Magic
+//
+// Magic boards are used to find what squares a sliding piece can attack, using occupancy Bitboard.
+//
 //  .mask   (Bitboard)      : Squares that a sliding piece can move/attack.
 //                          (The mask does not include edges, b/c if a Rook can move to h7, can always move/attack to h8 on h file.
 //                          This idea reduces the size of the table)
-//  .shif   (unsigned int)  : (For 64 bit) 64 - (The number of non-zero bits in the mask)
+//  .shift   (unsigned int)  : (For 64 bit) 64 - (The number of non-zero bits in the mask)
 
 //  .magic  (Bitboard)
 //  attacks[index]
@@ -250,15 +253,40 @@ extern Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];       // PawnAttacks[2[64]
 //                            There are 6+6 squares which makes 2^(6+6)=4096 possible combinations.
 //
 
+    // Mask - squares that a piece can attack, except edge squares. 
     // RookMagics[SQ_A1].mask  = a2-a7, b1-g1
     //                          00000000 00000001 00000001 00000001 00000001 00000001 00000001 01111110
     // RookMagics[SQ_C1].mask  = b1, d1-g1, c2-c7
     //                          00000000 00000100 00000100 00000100 00000100 00000100 00000100 01111010
 
-    // For 64 bits: (64 - number of non-zero bits in the mask)
-    // RookMagics[SQ_A1].shift = 64 - PopCount(RookMagics[SQ_A1].mask) = 52
-    // RookMagics[SQ_C1].shift = 64 - PopCount(RookMagics[SQ_C1].mask) = 53
 
+// Example:
+// index = ((Occupancy & mask) * magic) >> shift
+// attacks[index]
+
+// Rook A1 
+// Magic :	756605012284543520
+
+// Occupancy & mask: 2	(there is a piece on b1)
+//
+// Multiple occupancy with magic number
+// (O & M) * magic = 2 * 756605012284543520  = 1513210024569087040
+// 
+// shift 52 bits to the right, and find index = 336
+//
+// Use: RookMagics[SQ_A1].attacks[336]
+
+// there are two pieces on b1 and c1
+// Occupancy & mask: 6
+// 6  * magic = 4539630073707261120
+// >> shift 52
+// index: 1008
+
+// there are three pieces on b1, c1 and d1
+// Occupancy & mask: 14
+// 14 * magic = 10592470171983609280
+// >> shift 52
+// index: 2352
 
 
 

@@ -163,6 +163,38 @@ const std::string Bitboards::dump() {
 //                std::to_string(RookMagics[sqr].shift) +"\n";
 //    }
     
+//    for (Square sq = SQ_A1; sq <= SQ_H8; ++sq)
+//    {
+//      s += "mask: "+pretty(RookMagics[sq].mask) +"\n";
+//    }
+
+//    for (Square sq = SQ_A1; sq <= SQ_H8; ++sq)
+//    {
+//      s += "magic: "+printBB(RookMagics[sq].magic) +"\n";
+//    }
+
+//    for (Square sq = SQ_A1; sq <= SQ_C1; ++sq)
+//    {
+//      s += printBB(sq);
+//    }
+ 
+
+/*
+    Magic m = RookMagics[SQ_A1];
+    Bitboard ocp = SQ_B1 << 1;
+    s += "Rook A1 Magic "+std::to_string(m.magic)+"\n";
+    for (Square sq = SQ_A1; sq <= SQ_D1; ++sq)
+    {
+      ocp = ocp | sq;
+      s += "Mask "+printBB(ocp & m.mask) +"\n";
+      s += "Mask "+std::to_string(ocp & m.mask) +"\n";
+      Bitboard b = (ocp & m.mask) * m.magic;
+      s += "O&M * Magic "+ std::to_string(b) +"\n";
+      s += "shift "+ std::to_string(m.shift) +"\n"; 
+      b = b >> m.shift;
+      s += "Index "+ std::to_string(b) +"\n";
+    }
+*/
     return s;
 }
 

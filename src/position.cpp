@@ -125,7 +125,6 @@ std::ostream& operator<<(std::ostream& os, const Position& pos) {
   return os;
 }
 
-
 // Marcel van Kervinck's cuckoo algorithm for fast detection of "upcoming repetition"
 // situations. Description of the algorithm in the following paper:
 // https://marcelk.net/2013-04-06/paper/upcoming-rep-v2.pdf
@@ -485,6 +484,19 @@ const string Position::fen() const {
   return ss.str();
 }
 
+//
+const string Position::dump(const Position& pos) const {
+  std::ostringstream os;
+  os << "\n +---+---+---+---+---+---+---+---+\n";
+  for (Rank r = RANK_8; r >= RANK_1; --r)
+  {
+      for (File f = FILE_A; f <= FILE_H; ++f)
+          os << " | " << PieceToChar[pos.piece_on(make_square(f, r))];
+
+      os << " |\n +---+---+---+---+---+---+---+---+\n";
+  }
+  return os.str();
+}
 
 /// Position::slider_blockers() returns a bitboard of all the pieces (both colors)
 /// that are blocking attacks on the square 's' from 'sliders'. A piece blocks a

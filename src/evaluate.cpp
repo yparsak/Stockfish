@@ -891,6 +891,10 @@ std::string Eval::trace(const Position& pos) {
   v = pos.side_to_move() == WHITE ? v : -v; // Trace scores are from white's point of view
 
   std::stringstream ss;
+
+  ss << pos.fen() << "\n";
+  ss << pos.dump(pos);
+
   ss << std::showpoint << std::noshowpos << std::fixed << std::setprecision(2)
      << "     Term    |    White    |    Black    |    Total   \n"
      << "             |   MG    EG  |   MG    EG  |   MG    EG \n"

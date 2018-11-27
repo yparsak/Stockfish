@@ -315,3 +315,13 @@ Move UCI::to_move(const Position& pos, string& str) {
 
   return MOVE_NONE;
 }
+
+std::string UCI::legal_moves(const Position& pos) {
+  std::string moves = "";
+  for (const auto& m: MoveList<LEGAL>(pos)) {
+    Square from = from_sq(m);
+    Square to   = to_sq(m);
+    moves += UCI::square(from) + UCI::square(to) +" ";
+  }
+  return moves +"\n";
+}

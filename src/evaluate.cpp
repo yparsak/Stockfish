@@ -30,6 +30,8 @@
 #include "pawns.h"
 #include "thread.h"
 
+#include "uci.h"
+
 namespace Trace {
 
   enum Tracing { NO_TRACE, TRACE };
@@ -58,7 +60,6 @@ namespace Trace {
   }
 
   std::ostream& operator<<(std::ostream& os, Term t) {
-
     if (t == MATERIAL || t == IMBALANCE || t == INITIATIVE || t == TOTAL)
         os << " ----  ----"    << " | " << " ----  ----";
     else
@@ -895,6 +896,18 @@ std::string Eval::trace(const Position& pos) {
   ss << pos.fen() << "\n";
   ss << pos.dump(pos);
 
+  ss << "Legal Moves: \n";
+  ss << UCI::legal_moves(pos);
+  
+  //  ss << "White\n";
+  //  for (int i = 0; i < TERM_NB; i++) {
+  //      ss << std::to_string(i) << ") " << scores[i][WHITE] << "\n";
+  //  }
+  //  ss << "Black\n";
+  //  for (int i = 0; i < TERM_NB; i++) {
+  //      ss << std::to_string(i) << ") " << scores[i][BLACK] << "\n";
+  //  }
+    
   ss << std::showpoint << std::noshowpos << std::fixed << std::setprecision(2)
      << "     Term    |    White    |    Black    |    Total   \n"
      << "             |   MG    EG  |   MG    EG  |   MG    EG \n"

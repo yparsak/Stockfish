@@ -2,7 +2,7 @@ Following demonstrates position evaluation.
 ````
 >> ./stockfish
 Stockfish 271118 64 by T. Romstad, M. Costalba, J. Kiiski, G. Linscott
-eval
+>> eval
 rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 
  +---+---+---+---+---+---+---+---+
